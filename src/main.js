@@ -117,3 +117,5 @@ function createPoster(imageURL, title, quote) {
     title: title, 
     quote: quote}
 }
+
+console.log('Yay first project')
