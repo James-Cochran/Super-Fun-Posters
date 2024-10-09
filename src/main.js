@@ -10,6 +10,11 @@ let savedPostersButton = document.querySelector('.show-saved')
 let savedPostersPage = document.querySelector('.saved-posters')
 let nevermindButton = document.querySelector('.show-main')
 let backToMainButton = document.querySelector('.back-to-main')
+let showMyPosterButton = document.querySelector('.make-poster')
+let customImage = document.querySelector('#poster-image-url')
+let customTitle = document.querySelector('#poster-title')
+let customQuote = document.querySelector('#poster-quote')
+
 
 // we've provided you with some data to work with 👇
 // tip: you can tuck this data out of view with the dropdown found near the line number where the variable is declared 
@@ -120,6 +125,7 @@ makePosterButton.addEventListener('click', seeForm)
 savedPostersButton.addEventListener('click', showSaved)
 nevermindButton.addEventListener('click', showMainPage)
 backToMainButton.addEventListener('click', showMainPage)
+showMyPosterButton.addEventListener('click', createNewPoster)
 
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
@@ -161,4 +167,14 @@ function createPoster(imageURL, title, quote) {
     mainPage.classList.remove('hidden')
     posterForm.classList.add('hidden')
     savedPostersPage.classList.add('hidden')
+  }
+
+  function createNewPoster () {
+    let newImage = customImage.value 
+    let newTitle = customTitle.value 
+    let newQuote = customQuote.value 
+    
+    currentPoster = createPoster(image, title, quote)
+
+    
   }
