@@ -3,8 +3,9 @@ let image = document.querySelector('.poster-img')
 let title = document.querySelector('.poster-title')
 let quote = document.querySelector('.poster-quote')
 let showRandomButton = document.querySelector('.show-random')
-
-
+let makePosterButton = document.querySelector('.show-form')
+let posterForm = document.querySelector('.poster-form')
+let mainPage = document.querySelector('.main-poster')
 
 
 // we've provided you with some data to work with 👇
@@ -112,6 +113,7 @@ var currentPoster;
 // event listeners go here 👇
 window.onload = pageLoad
 showRandomButton.addEventListener('click', pageLoad)
+makePosterButton.addEventListener('click', seeForm)
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
 function getRandomIndex(array) {
@@ -124,17 +126,22 @@ function createPoster(imageURL, title, quote) {
     imageURL: imageURL, 
     title: title, 
     quote: quote}
-}
-
-function pageLoad () {
-  let randomImage = images[getRandomIndex(images)]
-  let randomTitle = titles[getRandomIndex(titles)]
-  let randomQuote = quotes[getRandomIndex(quotes)]
-
-  currentPoster = createPoster(randomImage, randomTitle, randomQuote)
-
-  image.src = randomImage
-  title.innerText = randomTitle
-  quote.innerText = randomQuote
-}
+  }
+  
+  function pageLoad () {
+    let randomImage = images[getRandomIndex(images)]
+    let randomTitle = titles[getRandomIndex(titles)]
+    let randomQuote = quotes[getRandomIndex(quotes)]
+    
+    currentPoster = createPoster(randomImage, randomTitle, randomQuote)
+    
+    image.src = randomImage
+    title.innerText = randomTitle
+    quote.innerText = randomQuote
+  }
+  
+  function seeForm () {
+    posterForm.classList.remove('hidden')
+    mainPage.classList.add('hidden')
+  }
 
