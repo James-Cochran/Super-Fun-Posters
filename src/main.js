@@ -169,12 +169,23 @@ function createPoster(imageURL, title, quote) {
     savedPostersPage.classList.add('hidden')
   }
 
-  function createNewPoster () {
+  function createNewPoster (event) {
+    event.preventDefault()
+
     let newImage = customImage.value 
     let newTitle = customTitle.value 
     let newQuote = customQuote.value 
     
-    currentPoster = createPoster(image, title, quote)
-
+    images.push(newImage)
+    titles.push(newTitle)
+    quotes.push(newQuote)
     
+    currentPoster = createPoster(newImage, newTitle, newQuote)
+
+    image.src = currentPoster.imageURL
+    title.innerText = currentPoster.title
+    quote.innerText = currentPoster.quote
+
+    mainPage.classList.remove('hidden')
+    posterForm.classList.add('hidden')
   }
