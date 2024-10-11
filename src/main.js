@@ -14,6 +14,7 @@ let showMyPosterButton = document.querySelector('.make-poster')
 let customImage = document.querySelector('#poster-image-url')
 let customTitle = document.querySelector('#poster-title')
 let customQuote = document.querySelector('#poster-quote')
+let keepPosterButton = document.querySelector('.save-poster')
 
 
 // we've provided you with some data to work with 👇
@@ -126,6 +127,7 @@ savedPostersButton.addEventListener('click', showSaved)
 nevermindButton.addEventListener('click', showMainPage)
 backToMainButton.addEventListener('click', showMainPage)
 showMyPosterButton.addEventListener('click', createNewPoster)
+keepPosterButton.addEventListener('click', keptPoster)
 
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
@@ -188,4 +190,9 @@ function createPoster(imageURL, title, quote) {
 
     mainPage.classList.remove('hidden')
     posterForm.classList.add('hidden')
+  }
+
+  function keptPoster () {
+    savedPosters.push(currentPoster)
+    
   }
