@@ -193,6 +193,16 @@ function createPoster(imageURL, title, quote) {
   }
 
   function keptPoster () {
-    savedPosters.push(currentPoster)
+   let isDuplicate = false
+   
+   savedPosters.forEach(poster => {
+     if (currentPoster.id === poster.id) {
+       isDuplicate = true 
+      }
+    })
     
+    if (!isDuplicate) {
+      savedPosters.push(currentPoster)
+    } else {
+    }
   }
