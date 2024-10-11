@@ -15,6 +15,7 @@ let customImage = document.querySelector('#poster-image-url')
 let customTitle = document.querySelector('#poster-title')
 let customQuote = document.querySelector('#poster-quote')
 let keepPosterButton = document.querySelector('.save-poster')
+let myPostersGrid = document.querySelector('.saved-posters-grid')
 
 
 // we've provided you with some data to work with 👇
@@ -163,6 +164,21 @@ function createPoster(imageURL, title, quote) {
   function showSaved () {
     savedPostersPage.classList.remove('hidden')
     mainPage.classList.add('hidden')
+
+    myPostersGrid.innerHTML = ''
+    
+    for (let i = 0; i < savedPosters.length; i++) {
+      let myPoster = savedPosters[i]
+
+      let posterHTML = `
+      <section class="mini-poster">
+        <img src="${myPoster.imageURL}"
+        <h2>${myPoster.title}</h2>
+        <h4>${myPoster.quote}</h4>
+      </section>`
+
+      myPostersGrid.innerHTML += posterHTML
+    }
   }
 
   function showMainPage () {
@@ -206,3 +222,4 @@ function createPoster(imageURL, title, quote) {
     } else {
     }
   }
+
