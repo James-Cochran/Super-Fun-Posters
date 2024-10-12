@@ -169,14 +169,14 @@ function createPoster(imageURL, title, quote) {
     
     for (let i = 0; i < savedPosters.length; i++) {
       let myPoster = savedPosters[i]
-
+      
       let posterHTML = `
       <section class="mini-poster">
-        <img src="${myPoster.imageURL}"
+        <img src="${myPoster.imageURL}">
         <h2>${myPoster.title}</h2>
         <h4>${myPoster.quote}</h4>
       </section>`
-
+      
       myPostersGrid.innerHTML += posterHTML
     }
   }
