@@ -16,7 +16,8 @@ let customTitle = document.querySelector('#poster-title')
 let customQuote = document.querySelector('#poster-quote')
 let keepPosterButton = document.querySelector('.save-poster')
 let myPostersGrid = document.querySelector('.saved-posters-grid')
-
+let showUnmotivationalButton = document.querySelector('.show-unmotivational')
+let unmotivationalSection = document.querySelector('.unmotivational')
 
 // we've provided you with some data to work with 👇
 // tip: you can tuck this data out of view with the dropdown found near the line number where the variable is declared 
@@ -251,6 +252,8 @@ nevermindButton.addEventListener('click', showMainPage)
 backToMainButton.addEventListener('click', showMainPage)
 showMyPosterButton.addEventListener('click', createNewPoster)
 keepPosterButton.addEventListener('click', keptPoster)
+showUnmotivationalButton.addEventListener('click', showUnmotivationalPosters)
+
 
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
@@ -345,3 +348,22 @@ function createPoster(imageURL, title, quote) {
     }
   }
 
+  function showUnmotivationalPosters () {
+    unmotivationalSection.classList.remove('hidden')
+    mainPage.classList.add('hidden')
+    let cleanedPosters = cleanData()
+    console.log('posters: ', cleanedPosters)
+  }
+
+  function cleanData () {
+    let cleanedPosters = unmotivationalPosters.map(poster => {
+      console.log('before poster: ', poster)
+      return {id: Date.now(),
+              imageURL: poster.img_url,
+              title: poster.name,
+              quote: poster.description
+            }
+          })
+    console.log('after: ', cleanedPosters)
+    return cleanedPosters 
+  }
