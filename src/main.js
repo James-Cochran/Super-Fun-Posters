@@ -9,7 +9,7 @@ let mainPage = document.querySelector('.main-poster')
 let savedPostersButton = document.querySelector('.show-saved')
 let savedPostersPage = document.querySelector('.saved-posters')
 let nevermindButton = document.querySelector('.show-main')
-let backToMainButton = document.querySelector('.back-to-main')
+let backToMainButton = document.querySelectorAll('.back-to-main')
 let showMyPosterButton = document.querySelector('.make-poster')
 let customImage = document.querySelector('#poster-image-url')
 let customTitle = document.querySelector('#poster-title')
@@ -18,6 +18,7 @@ let keepPosterButton = document.querySelector('.save-poster')
 let myPostersGrid = document.querySelector('.saved-posters-grid')
 let showUnmotivationalButton = document.querySelector('.show-unmotivational')
 let unmotivationalSection = document.querySelector('.unmotivational')
+let unmotivationalPostersGrid = document.querySelector('.unmotivational-posters-grid')
 
 // we've provided you with some data to work with 👇
 // tip: you can tuck this data out of view with the dropdown found near the line number where the variable is declared 
@@ -249,7 +250,8 @@ showRandomButton.addEventListener('click', pageLoad)
 makePosterButton.addEventListener('click', seeForm)
 savedPostersButton.addEventListener('click', showSaved)
 nevermindButton.addEventListener('click', showMainPage)
-backToMainButton.addEventListener('click', showMainPage)
+backToMainButton.forEach( button => {
+  button.addEventListener('click', showMainPage) })
 showMyPosterButton.addEventListener('click', createNewPoster)
 keepPosterButton.addEventListener('click', keptPoster)
 showUnmotivationalButton.addEventListener('click', showUnmotivationalPosters)
@@ -310,6 +312,7 @@ function createPoster(imageURL, title, quote) {
     mainPage.classList.remove('hidden')
     posterForm.classList.add('hidden')
     savedPostersPage.classList.add('hidden')
+    unmotivationalSection.classList.add('hidden')
   }
 
   function createNewPoster (event) {
@@ -351,19 +354,31 @@ function createPoster(imageURL, title, quote) {
   function showUnmotivationalPosters () {
     unmotivationalSection.classList.remove('hidden')
     mainPage.classList.add('hidden')
+   
     let cleanedPosters = cleanData()
-    console.log('posters: ', cleanedPosters)
+    unmotivationalPostersGrid.innerHTML = ''
+    
+    for (let i = 0; i < cleanedPosters.length; i++) {
+      let cleanedPoster = cleanedPosters[i]
+      
+      let posterHTML = `
+      <section class="mini-poster">
+        <img src="${cleanedPoster.imageURL}">
+        <h2>${cleanedPoster.title}</h2>
+        <h4>${cleanedPoster.quote}</h4>
+      </section>`
+      
+      unmotivationalPostersGrid.innerHTML += posterHTML
+    }
   }
 
   function cleanData () {
     let cleanedPosters = unmotivationalPosters.map(poster => {
-      console.log('before poster: ', poster)
       return {id: Date.now(),
               imageURL: poster.img_url,
               title: poster.name,
               quote: poster.description
             }
           })
-    console.log('after: ', cleanedPosters)
     return cleanedPosters 
   }
