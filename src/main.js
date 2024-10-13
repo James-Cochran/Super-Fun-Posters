@@ -255,7 +255,7 @@ backToMainButton.forEach( button => {
 showMyPosterButton.addEventListener('click', createNewPoster)
 keepPosterButton.addEventListener('click', keptPoster)
 showUnmotivationalButton.addEventListener('click', showUnmotivationalPosters)
-
+unmotivationalPostersGrid.addEventListener('dblclick', removePoster)
 
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
@@ -381,4 +381,12 @@ function createPoster(imageURL, title, quote) {
             }
           })
     return cleanedPosters 
+  }
+
+  function removePoster (event) {
+    // console.log('image: ', event)
+    let selectedPoster = event.target.parentElement
+    // console.log('selected?: ', selectedPoster)
+    selectedPoster.remove
+    // event.target.parentElement.classList.remove
   }
