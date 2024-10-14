@@ -384,9 +384,9 @@ function createPoster(imageURL, title, quote) {
   }
 
   function removePoster (event) {
-    // console.log('image: ', event)
-    let selectedPoster = event.target.parentElement
-    // console.log('selected?: ', selectedPoster)
-    selectedPoster.remove
-    // event.target.parentElement.classList.remove
+    let selectedPoster = event.target.closest('.mini-poster')
+  
+    if (selectedPoster) {
+      selectedPoster.remove()
+    }
   }
