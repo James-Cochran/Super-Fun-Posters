@@ -19,6 +19,8 @@ let myPostersGrid = document.querySelector('.saved-posters-grid')
 let showUnmotivationalButton = document.querySelector('.show-unmotivational')
 let unmotivationalSection = document.querySelector('.unmotivational')
 let unmotivationalPostersGrid = document.querySelector('.unmotivational-posters-grid')
+let cleanedPosters
+let newArray = []
 
 // we've provided you with some data to work with 👇
 // tip: you can tuck this data out of view with the dropdown found near the line number where the variable is declared 
@@ -269,124 +271,129 @@ function createPoster(imageURL, title, quote) {
     imageURL: imageURL, 
     title: title, 
     quote: quote}
-  }
+}
   
-  function pageLoad () {
-    let randomImage = images[getRandomIndex(images)]
-    let randomTitle = titles[getRandomIndex(titles)]
-    let randomQuote = quotes[getRandomIndex(quotes)]
-    
-    currentPoster = createPoster(randomImage, randomTitle, randomQuote)
-    
-    image.src = randomImage
-    title.innerText = randomTitle
-    quote.innerText = randomQuote
-  }
+function pageLoad () {
+  let randomImage = images[getRandomIndex(images)]
+  let randomTitle = titles[getRandomIndex(titles)]
+  let randomQuote = quotes[getRandomIndex(quotes)]
   
-  function seeForm () {
-    posterForm.classList.remove('hidden')
-    mainPage.classList.add('hidden')
-  }
-
-  function showSaved () {
-    savedPostersPage.classList.remove('hidden')
-    mainPage.classList.add('hidden')
-
-    myPostersGrid.innerHTML = ''
-    
-    for (let i = 0; i < savedPosters.length; i++) {
-      let myPoster = savedPosters[i]
-      
-      let posterHTML = `
-      <section class="mini-poster">
-        <img src="${myPoster.imageURL}">
-        <h2>${myPoster.title}</h2>
-        <h4>${myPoster.quote}</h4>
-      </section>`
-      
-      myPostersGrid.innerHTML += posterHTML
-    }
-  }
-
-  function showMainPage () {
-    mainPage.classList.remove('hidden')
-    posterForm.classList.add('hidden')
-    savedPostersPage.classList.add('hidden')
-    unmotivationalSection.classList.add('hidden')
-  }
-
-  function createNewPoster (event) {
-    event.preventDefault()
-
-    let newImage = customImage.value 
-    let newTitle = customTitle.value 
-    let newQuote = customQuote.value 
-    
-    images.push(newImage)
-    titles.push(newTitle)
-    quotes.push(newQuote)
-    
-    currentPoster = createPoster(newImage, newTitle, newQuote)
-
-    image.src = currentPoster.imageURL
-    title.innerText = currentPoster.title
-    quote.innerText = currentPoster.quote
-
-    mainPage.classList.remove('hidden')
-    posterForm.classList.add('hidden')
-  }
-
-  function keptPoster () {
-   let isDuplicate = false
-   
-   savedPosters.forEach(poster => {
-     if (currentPoster.id === poster.id) {
-       isDuplicate = true 
-      }
-    })
-    
-    if (!isDuplicate) {
-      savedPosters.push(currentPoster)
-    } else {
-    }
-  }
-
-  function showUnmotivationalPosters () {
-    unmotivationalSection.classList.remove('hidden')
-    mainPage.classList.add('hidden')
-   
-    let cleanedPosters = cleanData()
-    unmotivationalPostersGrid.innerHTML = ''
-    
-    for (let i = 0; i < cleanedPosters.length; i++) {
-      let cleanedPoster = cleanedPosters[i]
-      
-      let posterHTML = `
-      <section class="mini-poster">
-        <img src="${cleanedPoster.imageURL}">
-        <h2>${cleanedPoster.title}</h2>
-        <h4>${cleanedPoster.quote}</h4>
-      </section>`
-      
-      unmotivationalPostersGrid.innerHTML += posterHTML
-    }
-  }
-
-  function cleanData () {
-    let cleanedPosters = unmotivationalPosters.map(poster => {
-      return {id: Date.now(),
-              imageURL: poster.img_url,
-              title: poster.name,
-              quote: poster.description
-            }
-          })
-    return cleanedPosters 
-  }
-
-  function removePoster (event) {
-    let selectedPoster = event.target.closest('.mini-poster')
+  currentPoster = createPoster(randomImage, randomTitle, randomQuote)
   
-    if (selectedPoster) {
-      selectedPoster.remove()
+  image.src = randomImage
+  title.innerText = randomTitle
+  quote.innerText = randomQuote
+}
+
+function seeForm () {
+  posterForm.classList.remove('hidden')
+  mainPage.classList.add('hidden')
+}
+
+function showSaved () {
+  savedPostersPage.classList.remove('hidden')
+  mainPage.classList.add('hidden')
+
+  myPostersGrid.innerHTML = ''
+  
+  for (let i = 0; i < savedPosters.length; i++) {
+    let myPoster = savedPosters[i]
+    
+    let posterHTML = `
+    <section class="mini-poster">
+      <img src="${myPoster.imageURL}">
+      <h2>${myPoster.title}</h2>
+      <h4>${myPoster.quote}</h4>
+    </section>`
+    
+    myPostersGrid.innerHTML += posterHTML
+  }
+}
+
+function showMainPage () {
+  mainPage.classList.remove('hidden')
+  posterForm.classList.add('hidden')
+  savedPostersPage.classList.add('hidden')
+  unmotivationalSection.classList.add('hidden')
+}
+
+function createNewPoster (event) {
+  event.preventDefault()
+
+  let newImage = customImage.value 
+  let newTitle = customTitle.value 
+  let newQuote = customQuote.value 
+  
+  images.push(newImage)
+  titles.push(newTitle)
+  quotes.push(newQuote)
+  
+  currentPoster = createPoster(newImage, newTitle, newQuote)
+
+  image.src = currentPoster.imageURL
+  title.innerText = currentPoster.title
+  quote.innerText = currentPoster.quote
+
+  mainPage.classList.remove('hidden')
+  posterForm.classList.add('hidden')
+}
+
+function keptPoster () {
+  let isDuplicate = false
+  
+  savedPosters.forEach(poster => {
+    if (currentPoster.id === poster.id) {
+      isDuplicate = true 
     }
+  })
+  
+  if (!isDuplicate) {
+    savedPosters.push(currentPoster)
+  } else {
+  }
+}
+
+function showUnmotivationalPosters () {
+  unmotivationalSection.classList.remove('hidden')
+  mainPage.classList.add('hidden')
+  
+  cleanedPosters = cleanData()
+  cleanedPosters = cleanedPosters.filter( (poster) => {
+    return !newArray.includes(poster.locator)
+  })
+  
+  unmotivationalPostersGrid.innerHTML = ''
+  for (let i = 0; i < cleanedPosters.length; i++) {
+    let cleanedPoster = cleanedPosters[i]
+    
+    let posterHTML = `
+    <section class="mini-poster" data-id="${cleanedPoster.locator}">
+      <img src="${cleanedPoster.imageURL}">
+      <h2>${cleanedPoster.title}</h2>
+      <h4>${cleanedPoster.quote}</h4>
+    </section>`
+    
+    unmotivationalPostersGrid.innerHTML += posterHTML
+  }
+}
+
+function cleanData () {
+  cleanedPosters = unmotivationalPosters.map((poster) => {
+    return {id: Date.now(),
+            imageURL: poster.img_url,
+            title: poster.name,
+            quote: poster.description,
+            locator: poster.img_url
+          }
+        })
+  return cleanedPosters 
+}
+
+function removePoster (event) {
+  let selectedPoster = event.target.closest('.mini-poster')
+  
+  if (selectedPoster) {
+    selectedPoster.remove()
+  }
+  newArray.push(selectedPoster.dataset.id)
   }
