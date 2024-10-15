@@ -349,8 +349,7 @@ function keptPoster () {
   
   if (!isDuplicate) {
     savedPosters.push(currentPoster)
-  } else {
-  }
+  } 
 }
 
 function showUnmotivationalPosters () {
